@@ -170,7 +170,7 @@ define(['backbone', 'jquery','backboneassociations'],function (Backbone, $) {
 
         defaults: {
             configurations: new Service.ConfigurationList()
-        },
+        }, 
 
 
         relations: [
@@ -185,6 +185,7 @@ define(['backbone', 'jquery','backboneassociations'],function (Backbone, $) {
                 type: Backbone.Many,
                 key: 'metatype',
                 relatedModel: Service.Metatype,
+                collectionType: Service.MetatypeList,
                 includeInJSON: false
             }
         ],

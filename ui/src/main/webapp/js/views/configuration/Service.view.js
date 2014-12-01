@@ -19,13 +19,14 @@ define([
     'marionette',
     'js/models/Service',
     './ConfigurationEdit.view',
+    'js/views/EmptyView',
     'js/wreqr.js',
     'text!templates/configuration/serviceList.handlebars',
     'text!templates/configuration/serviceRow.handlebars',
     'text!templates/configuration/configurationRow.handlebars',
     'text!templates/configuration/servicePage.handlebars',
     'text!templates/configuration/configurationList.handlebars'
-    ],function (ich, _, Marionette, Service, ConfigurationEdit, wreqr, serviceList, serviceRow, configurationRow, servicePage, configurationList) {
+    ],function (ich, _, Marionette, Service, ConfigurationEdit, EmptyView, wreqr, serviceList, serviceRow, configurationRow, servicePage, configurationList) {
 
     var ServiceView = {};
 
@@ -141,7 +142,13 @@ define([
             this.poller.start();
         },
         onRender: function() {
-            this.collectionRegion.show(new ServiceView.ServiceTable({ collection: this.model.get("value"), showWarnings: this.showWarnings }));
+            var collection = this.model.get('value');
+            collection.reset();
+            if (collection.length) {
+                this.collectionRegion.show(new ServiceView.ServiceTable({ collection: collection, showWarnings: this.showWarnings }));
+            } else {
+                this.collectionRegion.show(new EmptyView.view({message: "There are no services currently configured."}));
+            }
         },
         refreshServices: function() {
             wreqr.vent.trigger('refreshConfigurations');
