@@ -100,6 +100,7 @@ define([
         template: 'serviceList',
         itemView: ServiceView.ServiceRow,
         itemViewContainer: 'tbody',
+        emptyView: EmptyView.services,
 
         initialize: function(options) {
             this.showWarnings = options.showWarnings;
@@ -144,11 +145,7 @@ define([
         onRender: function() {
             var collection = this.model.get('value');
             collection.reset();
-            if (collection.length) {
-                this.collectionRegion.show(new ServiceView.ServiceTable({ collection: collection, showWarnings: this.showWarnings }));
-            } else {
-                this.collectionRegion.show(new EmptyView.view({message: "There are no services currently configured."}));
-            }
+            this.collectionRegion.show(new ServiceView.ServiceTable({ collection: collection, showWarnings: this.showWarnings }));
         },
         refreshServices: function() {
             wreqr.vent.trigger('refreshConfigurations');

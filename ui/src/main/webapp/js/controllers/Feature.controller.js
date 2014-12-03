@@ -84,7 +84,7 @@ define([
                 if (options.collection && options.collection.length) {
                     return new FeaturesView(options);
                 }
-                return new EmptyView.view({message: "There are no configured features to display."});
+                return new EmptyView.view({message: 'No features are available for the "' + this.appName + '" application.'});
             },
 
             onFeatureAction: function (view, model){

@@ -12,16 +12,18 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  *
  **/
-/*global define, window*/
+/*global define*/
 define([
-        'text!templates/emptyView.handlebars',
-        'icanhaz'
-        ],function (emptyViewTemplate, ich) {
+    'marionette',
+    'text!templates/emptyView.handlebars',
+    'icanhaz'
+],
+function (Marionette, emptyViewTemplate, ich) {
 
     ich.addTemplate('emptyViewTemplate', emptyViewTemplate);
 
     var EmptyView = {};
-    
+
     EmptyView.view = Marionette.ItemView.extend({
         template: 'emptyViewTemplate',
         initialize: function(options) {
@@ -29,6 +31,13 @@ define([
         },
         serializeData: function() {
             return  {message: this.message};
+        }
+    });
+
+    EmptyView.services = Marionette.ItemView.extend({
+        template: 'emptyViewTemplate',
+        serializeData: function() {
+            return  {message: "There are no services currently configured."};
         }
     });
 
